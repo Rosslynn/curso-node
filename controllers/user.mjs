@@ -77,13 +77,13 @@ const userController = {
     deleteUsuarios: async (req, res) => {
         try {
             const { id } = req.params;
-            //Borrar fisicamente
-            //const user = await User.findByIdAndDelete(id);
+            const { authenticatedUser } = req;  
             const user = await User.findByIdAndUpdate(id, { status: false });
 
             return res.status(200).json({
                 ok:true,
-                user
+                user,
+                authenticatedUser
             })
             
         } catch (error) {

@@ -3,7 +3,7 @@ import { check } from "express-validator";
 
 import userController from "../controllers/user.mjs";
 import { existingEmail, existingUser, validateRole } from "../helpers/db-validators.mjs";
-import { validateErrors } from "../middlewares/validate-errors.mjs";
+import { validateErrors, hasRole, validateJWT } from '../middlewares/index.mjs';
 
 const router = Router();
 
@@ -37,6 +37,8 @@ router.post('/', [
 ], userController.postUsuarios);
 
 router.delete('/:id', [
+    validateJWT,
+    hasRole('ADMIN_ROLE','USER_ROLE'),
     check('id','No es un id valido').isMongoId().custom(existingUser),
     validateErrors
 ], userController.deleteUsuarios);
