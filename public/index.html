@@ -24,34 +24,40 @@
     </button>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
-        async function handleCredentialResponse(google) {
-            try {
-                const body = { id_token: google.credential };
-                let url = (window.location.hostname.includes('localhost')) ? 'http://localhost:3000/api/auth/google' : 'https://learning-nodejsx.herokuapp.com/api/auth/google';
-                const response = await fetch(url, {
-                    method:'POST',
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify(body)
-                });
-                const data = await response.json(body);
-                console.log(data);
-                localStorage.setItem('gmail', data.user.email );
+        (() => {
+            async function handleCredentialResponse(google) {
+                try {
+                    const body = {
+                        id_token: google.credential
+                    };
+                    let url = (window.location.hostname.includes('localhost')) ?
+                        'http://localhost:3000/api/auth/google' :
+                        'https://learning-nodejsx.herokuapp.com/api/auth/google';
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    });
+                    const data = await response.json(body);
+                    console.log(data);
+                    localStorage.setItem('gmail', data.user.email);
 
-            } catch (error) {
-                console.log(error);
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
 
-        const buttonSignOut = document.querySelector('#google-signout');
-        buttonSignOut.addEventListener('click', () => {
-            google.accounts.id.disableAutoSelect();
-            google.accounts.id.revoke(localStorage.getItem('gmail'), done => {
-              localStorage.clear();
-              location.reload();
+            const buttonSignOut = document.querySelector('#google-signout');
+            buttonSignOut.addEventListener('click', () => {
+                google.accounts.id.disableAutoSelect();
+                google.accounts.id.revoke(localStorage.getItem('gmail'), done => {
+                    localStorage.clear();
+                    location.reload();
+                });
             });
-        } );
+        })();
     </script>
 </body>
 
