@@ -12,5 +12,9 @@ router.post('/login', [
     validateErrors
 ], authController.login);
 
+router.post('/google', [
+    check('id_token','id_token de google es necesario').notEmpty(),
+    validateErrors
+], authController.googleSignIn);
 
 export default router;
