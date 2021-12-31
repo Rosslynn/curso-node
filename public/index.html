@@ -27,7 +27,7 @@
         async function handleCredentialResponse(google) {
             try {
                 const body = { id_token: google.credential };
-                const response = await fetch('http://localhost:3000/api/auth/google', {
+                const response = await fetch('https://learning-nodejsx.herokuapp.com/api/auth/google', {
                     method:'POST',
                     headers: {
                         'Content-Type':'application/json'
