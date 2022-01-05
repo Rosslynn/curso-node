@@ -2,16 +2,24 @@ import express, { urlencoded } from "express";
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+
 import userRoutes from "../routes/user.mjs";
 import authRoutes from "../routes/auth.mjs";
+import categoriesRoutes from '../routes/categories.mjs';
+import productsRoutes from '../routes/products.mjs';
 import dbConnection from "../database/config.mjs";
 
 export default class Server {
 
     constructor() {
         this.app = express();
-        this.path = '/api/users';
-        this.authPath = '/api/auth';
+        this.paths = {
+            users:'/api/users',
+            authPath:'/api/auth',
+            categoriesPath:'/api/categories',
+            productsPath:'/api/products',
+        }
+
         this.port = process.env.PORT || 8080;
 
         //Conectar db
@@ -37,8 +45,10 @@ export default class Server {
     }
 
     routes() {
-        this.app.use(this.authPath, authRoutes);
-        this.app.use(this.path, userRoutes);
+        this.app.use(this.paths.users, userRoutes);
+        this.app.use(this.paths.authPath, authRoutes);
+        this.app.use(this.paths.categoriesPath, categoriesRoutes);
+        this.app.use(this.paths.productsPath, productsRoutes);
     }
 
     listen() {

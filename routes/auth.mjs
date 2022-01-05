@@ -2,7 +2,7 @@ import { Router } from "express";
 import { check } from "express-validator";
 
 import authController from "../controllers/auth.mjs";
-import { validateErrors } from '../middlewares/validate-errors.mjs'
+import { validateErrors } from '../middlewares/validate-errors.mjs';
 
 const router = Router();
 
