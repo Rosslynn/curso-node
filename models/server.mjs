@@ -6,6 +6,7 @@ import cors from 'cors';
 import userRoutes from "../routes/user.mjs";
 import authRoutes from "../routes/auth.mjs";
 import categoriesRoutes from '../routes/categories.mjs';
+import searchRoutes from '../routes/search.mjs';
 import productsRoutes from '../routes/products.mjs';
 import dbConnection from "../database/config.mjs";
 
@@ -18,6 +19,7 @@ export default class Server {
             authPath:'/api/auth',
             categoriesPath:'/api/categories',
             productsPath:'/api/products',
+            searchPath:'/api/search'
         }
 
         this.port = process.env.PORT || 8080;
@@ -49,6 +51,7 @@ export default class Server {
         this.app.use(this.paths.authPath, authRoutes);
         this.app.use(this.paths.categoriesPath, categoriesRoutes);
         this.app.use(this.paths.productsPath, productsRoutes);
+        this.app.use(this.paths.searchPath, searchRoutes);
     }
 
     listen() {
